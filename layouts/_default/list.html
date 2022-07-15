@@ -11,7 +11,7 @@
   </div>
   {{ end }}
 
-  {{- $pages := cond (eq .Type "blog") (union .RegularPages .Sections).ByDate.Reverse (union .RegularPages .Sections) }}
+  {{- $pages := cond (eq .Type "blog") (union .RegularPages .Sections).ByDate.Reverse (union .RegularPages .Sections).ByTitle }}
   {{- $paginator := .Paginate $pages }}
   {{- $folder_icon := (resources.Get "icons/folder-icon.png").RelPermalink}}
   {{- $page_icon := (resources.Get "icons/page-icon.png").RelPermalink}}
@@ -25,8 +25,10 @@
     {{- $i := .Page.Params.icon }}
     {{- if hasPrefix $i "/"}}
     {{- $icon_url = ((resources.Get (printf "icons%s" $i)).RelPermalink)}}
+    {{- else if hasPrefix $i "." }}
+    {{- $icon_url = substr $i 1}}
     {{- else}}
-    {{- $icon_url = (printf "%s%s" .URL $i)}}
+    {{- $icon_url = (printf "%s%s" .RelPermalink $i)}}
     {{- end}}
     {{- end}}
 
