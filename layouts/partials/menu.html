@@ -1,4 +1,4 @@
-<nav>
+<nav id="drawer">
     {{- $default_icon := (resources.Get "icons/folder-icon.png").RelPermalink}}
 
     {{- range site.Menus.main }}
@@ -35,3 +35,7 @@
 
     {{- end}}
 </nav>
+{{- $menu_icon := (resources.Get "icons/btn-menu.png").RelPermalink}}
+<div class="menu-toggle">
+    <img id="toggle-menu" src="{{$menu_icon}}" alt="Open menu" class="is-clickable" />
+</div>
