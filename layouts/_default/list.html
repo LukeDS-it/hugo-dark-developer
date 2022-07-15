@@ -1,0 +1,57 @@
+{{ define "main" }}
+<main>
+  {{ if or .Title .Content }}
+  <div class="content">
+    {{if not (isset .Params "hidetitle")}}
+    {{ with .Title }}<h1>{{ . }}</h1>{{ end }}
+    {{end}}
+    {{ with .Content }}
+    <div>{{ . }}</div>
+    {{ end }}
+  </div>
+  {{ end }}
+
+  {{- $pages := cond (eq .Type "blog") (union .RegularPages .Sections).ByDate.Reverse (union .RegularPages .Sections) }}
+  {{- $paginator := .Paginate $pages }}
+  {{- $folder_icon := (resources.Get "icons/folder-icon.png").RelPermalink}}
+  {{- $page_icon := (resources.Get "icons/page-icon.png").RelPermalink}}
+  {{- $blog_icon := (resources.Get "icons/blog-icon.png").RelPermalink}}
+
+  <div class="content">
+    {{- range $index, $page := $paginator.Pages }}
+
+    {{- $icon_url := cond (eq .Type "blog") $blog_icon (cond .IsPage $page_icon $folder_icon)}}
+    {{- if isset .Page.Params "icon" }}
+    {{- $i := .Page.Params.icon }}
+    {{- if hasPrefix $i "/"}}
+    {{- $icon_url = ((resources.Get (printf "icons%s" $i)).RelPermalink)}}
+    {{- else}}
+    {{- $icon_url = (printf "%s%s" .URL $i)}}
+    {{- end}}
+    {{- end}}
+
+    <div class="paginator-element">
+      <a href="{{.Permalink}}" class="content-image">
+        <img src="{{ $icon_url }}" alt="{{ .Name }}"/>
+      </a>
+      <div class="list-descriptor">
+        <h2>
+          <a href="{{.Permalink}}">
+            {{ .Title }}
+          </a>
+        </h2>
+        <p>
+          {{ if .Description }}
+          {{.Description}}
+          {{ else }}
+          {{ .Summary | plainify | htmlUnescape }}{{ if .Truncated }}...{{ end }}
+          {{ end }}
+        </p>
+        <hr/>
+      </div>
+    </div>
+    {{ end }}
+  </div>
+</main>
+
+{{ end }}

@@ -1,0 +1,24 @@
+{{ define "main" }}
+<main class="content">
+    <article>
+        <div>
+            {{if not (isset .Params "hidetitle")}}
+            <h1>{{.Title}}</h1>
+            {{end}}
+            {{ .Content }}
+        </div>
+        {{ with .Params.tags }}
+        <div>
+            <ul id="tags">
+                {{ range . }}
+                <li><a href="{{ " /tags/" | relLangURL }}{{ . | urlize }}">{{ . }}</a></li>
+                {{ end }}
+            </ul>
+        </div>
+        <time datetime="{{ .Date.Format " 2006-01-02T15:04:05" }}">
+            {{ .Date.Format "02.01.2006 15:04" }}
+        </time>
+        {{ end }}
+    </article>
+</main>
+{{ end }}

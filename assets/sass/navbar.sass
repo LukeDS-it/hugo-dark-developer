@@ -1,0 +1,50 @@
+nav
+    margin: auto
+    display: flex
+    flex-direction: row
+
+    div
+        a
+            img
+                height: 48px
+
+@include touch
+    nav
+
+@include desktop
+    nav
+        justify-content: center
+
+        div
+            a
+                display: flex
+                flex-direction: column
+                margin: 0 8px
+                position: relative
+                text-decoration: none
+
+                span
+                    top: 56px
+                    right: -64%
+                    padding: 5px
+                    width: 110px
+                    position: absolute
+                    visibility: hidden
+                    text-align: center
+                    border-radius: 5px
+                    background-color: $grey-lightest
+                    color: $dark
+
+                    &::after
+                        content: " "
+                        position: absolute
+                        bottom: 100%
+                        left: 50%
+                        margin-left: -5px
+                        border-width: 5px
+                        border-style: solid
+                        border-color: transparent transparent $grey-lightest transparent
+
+                &:hover
+                    span
+                        visibility: visible

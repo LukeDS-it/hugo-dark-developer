@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+{{ $lang := .Site.LanguageCode | default "en-us" }}
+<html lang="{{ $lang }}">
+
+<head>
+  {{ partial "head" . }}
+</head>
+
+<body>
+
+  {{ partial "console" . }}
+
+  <div class="section">
+    <div class="container">
+      <a href="/">
+        <figure class="image is-96x96 centered">
+          <img src="/{{ site.Params.logo }}" alt="Back to the home page" />
+        </figure>
+      </a>
+    </div>
+  </div>
+
+  {{ partial "menu" . }}
+
+  <div class="section">
+    <div class="container has-border px-4 py-5">
+      {{ block "main" . }}{{ end }}
+    </div>
+  </div>
+
+  {{ partial "footer" . }}
+
+
+</body>
+
+</html>

@@ -1,0 +1,14 @@
+name = "Dark Developer"
+license = "MIT"
+licenselink = "Link to theme's license"
+description = "Dark theme with an operating system look and feel, and a terminal-like search bar"
+homepage = "Website of your theme"
+tags = ["blog", "dark mode", "responsive"]
+features = ["responsive", "pullup menu", "dark mode", "search api", "icons"]
+min_version = "0.83.0"
+
+
+# If the theme has a single author
+[author]
+    name = "Luca Di Stefano"
+    homepage = "https://ldsoftware.it"

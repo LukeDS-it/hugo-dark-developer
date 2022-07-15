@@ -1,0 +1,37 @@
+<nav>
+    {{- $default_icon := (resources.Get "icons/folder-icon.png").RelPermalink}}
+
+    {{- range site.Menus.main }}
+    {{- $icon_url := $default_icon }}
+    {{- if isset .Page.Params "icon" }}
+    {{- $i := .Page.Params.icon }}
+    {{- if hasPrefix $i "/"}}
+    {{- $icon_url = ((resources.Get (printf "icons%s" $i)).RelPermalink)}}
+    {{- else}}
+    {{- $icon_url = (printf "%s%s" .URL $i)}}
+    {{- end}}
+    {{- end}}
+    <div class="clickable">
+        <a href="{{ .URL }}">
+            <img src="{{$icon_url}}" alt="{{.Name}}" />
+            <span>
+                {{.Name}}
+            </span>
+        </a>
+    </div>
+    {{- end}}
+
+    {{- range $key, $value := site.Params.social}}
+
+    {{- $social_icon := (resources.Get (printf "icons/%s-icon.png" (lower $key))).RelPermalink }}
+    <div class="clickable">
+        <a href="{{$value}}" target="_blank">
+            <img src="{{$social_icon}}" alt="My {{$key}} account" />
+            <span>
+                {{ $key }}
+            </span>
+        </a>
+    </div>
+
+    {{- end}}
+</nav>

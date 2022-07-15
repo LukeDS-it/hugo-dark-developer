@@ -1,0 +1,10 @@
+{{$id := .Get "id" }}
+{{if .Get "full" }}
+<div class="image is-16by9">
+  <iframe class="has-ratio" src="https://www.youtube.com/embed/{{ $id }}?enablejsapi=1" allowfullscreen></iframe>
+</div>
+{{else}}
+<div style="width: 100%">
+  <iframe src="https://www.youtube.com/embed/{{ $id }}?enablejsapi=1" width="560" height="315" allowfullscreen></iframe>
+</div>
+{{end}}

@@ -1,0 +1,17 @@
+<div class="console">
+  <span class="userhost">guest@ldsoftware.it:</span>
+  <ol>
+    <li><a href="/">~</a></li>
+    {{if not .IsHome}}
+    {{- $permalink := substr .RelPermalink 1 (sub (len .RelPermalink) 2)}}
+    {{$url := ""}}
+    {{range $el := split $permalink "/"}}
+    {{$url = printf "%s/%s" $url $el}}
+    <li><a href="{{$url}}">/{{$el}}</a></li>
+    {{end}}
+    {{end}}
+  </ol>
+  $
+  <label for="prompt">Write a command!</label>
+  <input type="text" id="prompt" autocomplete="off" autofocus/>
+</div>
