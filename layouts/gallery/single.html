@@ -1,0 +1,124 @@
+{{ define "main" }}
+<main class="content">
+    <article>
+        <div>
+            {{if not (isset .Params "hidetitle")}}
+            <h1>{{.Title}} (Gallery)</h1>
+            {{end}}
+            {{ .Content }}
+            <div id="gallery" class="grid" data-masonry='{"itemSelector": ".grid-item", "columnWidth": 400, "gutter": 8}'>
+                {{ range .Site.Data.galleries }}
+                {{ if eq .name "grigioverde" }}
+                {{ range .images }}
+                <div class="grid-item grid-item-{{.ratio}}">
+                    <img src="{{.url}}" alt="{{.alt}}" onclick="showImageOverlay('{{.url}}', '{{.alt}}', '{{.description}}')"/>
+                </div>
+                {{ end }}
+                {{end}}
+                {{end}}
+            </div>
+
+        </div>
+        {{ with .Params.tags }}
+        <div>
+            <ul id="tags">
+                {{ range . }}
+                <li><a href="{{ " /tags/" | relLangURL }}{{ . | urlize }}">{{ . }}</a></li>
+                {{ end }}
+            </ul>
+        </div>
+        <time datetime="{{ .Date.Format " 2006-01-02T15:04:05" }}">
+        {{ .Date.Format "02.01.2006 15:04" }}
+        </time>
+        {{ end }}
+    </article>
+</main>
+
+<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+
+<script>
+    function showImageOverlay(url, alt, description) {
+        const overlay = document.createElement('div');
+        overlay.className = 'overlay';
+
+        const overlayImage = document.createElement('img');
+        overlayImage.src = url;
+        overlayImage.alt = alt;
+
+        const overlayDescription = document.createElement('p');
+        overlayDescription.textContent = description;
+
+        overlay.appendChild(overlayImage);
+        overlay.appendChild(overlayDescription);
+
+        document.body.appendChild(overlay);
+
+        function closeOverlay() {
+            document.body.removeChild(overlay);
+            document.removeEventListener('keydown', handleKeyDown);
+        }
+
+        overlay.addEventListener('click', closeOverlay);
+
+        function handleKeyDown(event) {
+            if (event.key === 'Escape') {
+                closeOverlay();
+            }
+        }
+
+        document.addEventListener('keydown', handleKeyDown);
+    }
+
+
+</script>
+
+<style>
+
+    .grid:after {
+        content: '';
+        display: block;
+        clear: both;
+    }
+
+    .grid-item {
+        float: left;
+    }
+
+    .grid-item-landscape {
+        width: 400px;
+        height: 300px;
+    }
+
+    .grid-item-portrait {
+        width: 300px;
+        height: 400px;
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .overlay img {
+        max-width: 90%;
+        max-height: 70%;
+    }
+
+    .overlay p {
+        margin-top: 10px;
+        font-size: 16px;
+        color: #fff;
+    }
+
+</style>
+
+
+{{ end }}
