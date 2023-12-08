@@ -6,11 +6,12 @@
             <h1>{{.Title}} (Gallery)</h1>
             {{end}}
             {{ .Content }}
-            <div id="gallery" class="grid" data-masonry='{"itemSelector": ".grid-item", "columnWidth": 400, "gutter": 8, "isFitWidth": true}'>
+            <div id="gallery" class="gallery-container">
+                {{ $gallery := .Params.gallery }}
                 {{ range .Site.Data.galleries }}
-                    {{ if eq .name "grigioverde" }}
+                    {{ if eq .name $gallery }}
                         {{ range .images }}
-                        <div class="grid-item grid-item-{{.ratio}}">
+                        <div class="{{.ratio}}">
                             <img src="{{.url}}" alt="{{.alt}}" onclick="showImageOverlay('{{.url}}', '{{.alt}}', '{{.description}}')"/>
                         </div>
                         {{ end }}
@@ -33,8 +34,6 @@
         {{ end }}
     </article>
 </main>
-
-<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 
 <script>
     function showImageOverlay(url, alt, description) {
@@ -71,53 +70,5 @@
 
 
 </script>
-
-<!--<style>-->
-
-<!--    .grid:after {-->
-<!--        content: '';-->
-<!--        display: block;-->
-<!--        clear: both;-->
-<!--    }-->
-
-<!--    .grid-item {-->
-<!--        float: left;-->
-<!--    }-->
-
-<!--    .grid-item-landscape {-->
-<!--        width: 400px;-->
-<!--        height: 300px;-->
-<!--    }-->
-
-<!--    .grid-item-portrait {-->
-<!--        width: 300px;-->
-<!--        height: 400px;-->
-<!--    }-->
-
-<!--    .overlay {-->
-<!--        position: fixed;-->
-<!--        top: 0;-->
-<!--        left: 0;-->
-<!--        width: 100%;-->
-<!--        height: 100%;-->
-<!--        background-color: rgba(0, 0, 0, 0.8);-->
-<!--        display: flex;-->
-<!--        justify-content: center;-->
-<!--        align-items: center;-->
-<!--        flex-direction: column;-->
-<!--    }-->
-
-<!--    .overlay img {-->
-<!--        max-width: 90%;-->
-<!--        max-height: 70%;-->
-<!--    }-->
-
-<!--    .overlay p {-->
-<!--        margin-top: 10px;-->
-<!--        font-size: 16px;-->
-<!--        color: #fff;-->
-<!--    }-->
-
-<!--</style>-->
 
 {{ end }}
